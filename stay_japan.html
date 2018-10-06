@@ -1,0 +1,89 @@
+<html dir="ltr" lang="en-US">
+<head>
+<script>
+  function checkPoker(inputstring) {
+    const counted = [];
+    const temp = [];
+	
+	// restructure data to analysis
+    // the case of the parts of poker hands
+    for (let k = 0; k <= 9; k++) {
+        if (k % 2 !== 0) {
+            temp.push(inputstring[k]);
+            if (counted.indexOf(inputstring[k]) === -1) {
+                counted.push(inputstring[k]);
+            }
+        }
+    }
+	
+    switch (counted.length) {
+        case 2: // have 2 kinds of same rank
+            let count = 0;
+            for (let i = 0; i <= 4; i++) {
+                if (counted[0] === temp[i]) {
+                    count++;
+                }
+            }
+            if (count === 4 || count === 1) {
+                message = '4C';
+            } else {
+                message = 'FH';
+            }
+            break;
+        case 3: // have 3 kinds of same rank
+            let count1 = 0;
+            let count2 = 0;
+            for (let i = 0; i <= 4; i++) {
+                if (counted[0] === temp[i]) {
+                    count1++;
+                }
+                if (counted[1] === temp[i]) {
+                    count2++;
+                }
+            }
+            if (count1 === 2 || count2 === 2) {
+                message = '2P';
+            } else {
+                message = '3C';
+            }
+            break;
+        case 4: // have 4 kinds of same rank
+            message = '1P';
+            break;
+        default: // have 5 kinds of same rank
+            message = '--';
+    }
+    return message;
+	}
+  
+  function checkInputstring(){
+    var result = document.getElementById("result");
+    var inputstring = document.getElementById("inputstring");
+    result.innerHTML = checkPoker(inputstring.value);
+  }
+  
+  function checkCase(){
+  	var ouput = document.getElementById("example");
+ouput.innerHTML = 
+"<span>D4C4H4D8S4</span> //Four cards. the output is : "+checkPoker('D4C4H4D8S4')+"<br/>"+
+"<span>D4C4C8D8S4</span> //Full House. the output is : "+checkPoker('D4C4C8D8S4')+"<br/>"+
+"<span>D4C4C3D8S4</span> //Three cards. the output is : "+checkPoker('D4C4C3D8S4')+"<br/>"+
+"<span>S8D3HQS3CQ</span> //Two pairs. the output is : "+checkPoker('S8D3HQS3CQ')+"<br/>"+
+"<span>S8D3HKS3CQ</span> //One pair. the output is : "+checkPoker('S8D3HKS3CQ')+"<br/>"+
+"<span>S8D3HKS2CQ</span> //5 cards the different rank. the output is : "+checkPoker('S8D3HKS2CQ')+"<br/>"
+  }
+  
+</script>
+</head>
+<body onload="checkCase()">
+  <div id="example">
+  </div>
+  <div>
+    <input id="inputstring" value="D4C4H4D8S4" />
+    <button onclick="checkInputstring()">Check</button>
+    <div id="result">
+
+    </div>
+  </div>
+</body>
+</html>
